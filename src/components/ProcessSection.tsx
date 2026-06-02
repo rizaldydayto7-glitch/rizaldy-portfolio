@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { Eye, Search, PenSquare, Grid, RefreshCw, Milestone } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Eye, Search, PenSquare, Grid, RefreshCw, Milestone, ArrowUpRight } from 'lucide-react';
 
 const phases = [
   {
@@ -48,155 +49,107 @@ const phases = [
 
 export default function ProcessSection() {
   const [activePhase, setActivePhase] = useState("01");
-  const refs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const phaseId = entry.target.getAttribute('data-phase');
-            if (phaseId) setActivePhase(phaseId);
-          }
-        });
-      },
-      {
-        rootMargin: '-40% 0px -45% 0px', // detects when element passes the central view area
-        threshold: 0.1
-      }
-    );
-
-    phases.forEach((p) => {
-      const el = refs.current[p.phase];
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      phases.forEach((p) => {
-        const el = refs.current[p.phase];
-        if (el) observer.unobserve(el);
-      });
-    };
-  }, []);
-
-  const handleStepClick = (phaseId: string) => {
-    setActivePhase(phaseId);
-    const target = refs.current[phaseId];
-    if (target) {
-      const offsetTop = target.offsetTop - 120;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
-  };
 
   return (
     <section id="process" className="py-24 sm:py-32 px-6 max-w-[1200px] mx-auto border-t border-[#222222]/30">
-      <div className="reveal-on-scroll">
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666] mb-3 block">
-          06 / Workflow
-        </span>
-        <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
-          Creative Process
+      <div className="mb-16">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="w-1.5 h-1.5 rounded-full bg-accent-custom animate-pulse"></span>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666]">
+            06 / Workflow
+          </span>
+        </div>
+        <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
+          My Creative <br />
+          <span className="font-serif italic text-accent-custom tracking-wide">Process</span>
         </h2>
-        <p className="text-[#666666] max-w-xl text-base leading-relaxed mb-16">
+        <p className="text-zinc-500 max-w-xl text-sm sm:text-base leading-relaxed">
           A structured 6-phase journey from abstract product alignment to robust, scalable and developers-ready systems.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start relative">
-        
-        {/* Left Side: Sticky Process Progress Visualizer */}
-        <div className="lg:col-span-4 sticky top-32 hidden lg:block border-l border-[#222222] pl-8 py-2">
-          <div className="flex flex-col gap-6 relative">
-            {phases.map((p) => {
-              const isActive = activePhase === p.phase;
-              return (
-                <button
-                  key={p.phase}
-                  onClick={() => handleStepClick(p.phase)}
-                  className="flex items-center gap-4 text-left group focus:outline-none focus:ring-0"
-                >
+      <div className="flex flex-col border-t border-zinc-800/40 divide-y divide-zinc-850/50">
+        {phases.map((p) => {
+          const isActive = activePhase === p.phase;
+          return (
+            <div
+              key={p.phase}
+              onClick={() => setActivePhase(p.phase)}
+              onMouseEnter={() => setActivePhase(p.phase)}
+              className={`w-full text-left transition-all duration-350 cursor-pointer group relative overflow-hidden rounded-xl border ${
+                isActive 
+                  ? 'bg-[#121316]/70 border-zinc-800/80 shadow-[0_4px_30px_rgba(0,0,0,0.45)]' 
+                  : 'border-transparent hover:bg-white/[0.02]'
+              } p-6 sm:p-8`}
+            >
+              <div className="flex items-start justify-between w-full">
+                <div className="flex items-start flex-1 mr-4">
+                  {/* Phase number */}
                   <span
-                    className={`font-mono text-xs font-semibold tracking-widest transition-all duration-300 ${
-                      isActive ? 'text-accent-custom scale-110' : 'text-[#444444] group-hover:text-white'
+                    className={`font-display text-4xl sm:text-6xl font-extrabold tracking-tighter transition-all duration-500 mr-6 sm:mr-10 select-none ${
+                      isActive ? 'text-accent-custom scale-102' : 'text-transparent'
                     }`}
+                    style={
+                      !isActive
+                        ? { WebkitTextStroke: '1px rgba(255, 255, 255, 0.12)' }
+                        : {}
+                    }
                   >
-                    PHASE_{p.phase}
+                    {p.phase}
                   </span>
-                  
-                  <span
-                    className={`h-[1px] transition-all duration-500 ${
-                      isActive ? 'w-12 bg-accent-custom' : 'w-4 bg-[#222222] group-hover:bg-[#444444]'
-                    }`}
-                  />
-                  
-                  <span
-                    className={`text-sm font-medium transition-colors duration-300 ${
-                      isActive ? 'text-white' : 'text-[#666666] group-hover:text-[#999999]'
-                    }`}
-                  >
-                    {p.title}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Right Side: Step details scrolling pane */}
-        <div className="lg:col-span-8 space-y-16 lg:space-y-24">
-          {phases.map((p) => {
-            const IconComponent = p.icon;
-            const isActive = activePhase === p.phase;
+                  {/* Title & info list wrapper */}
+                  <div className="flex-1 mt-1 sm:mt-2">
+                    <div className="flex items-center gap-3">
+                      <h3 className={`font-display font-extrabold text-lg sm:text-2xl transition-all duration-300 ${
+                        isActive ? 'text-white' : 'text-zinc-400 group-hover:text-zinc-200'
+                      }`}>
+                        {p.title}
+                      </h3>
+                      {isActive && (
+                        <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-accent-custom/85 bg-accent-custom/10 border border-accent-custom/20 px-2 py-0.5 rounded">
+                          Active
+                        </span>
+                      )}
+                    </div>
 
-            return (
-              <div
-                key={p.phase}
-                ref={(el) => (refs.current[p.phase] = el)}
-                data-phase={p.phase}
-                className={`reveal-on-scroll flex gap-6 sm:gap-8 items-start relative border-l-2 pl-6 sm:pl-8 transition-all duration-500 ${
-                  isActive
-                    ? 'border-accent-custom'
-                    : 'border-[#222222]'
-                }`}
-              >
-                {/* Visual phase icon */}
-                <div
-                  className={`w-12 h-12 rounded flex items-center justify-center border transition-all duration-500 shrink-0 ${
-                    isActive
-                      ? 'bg-accent-custom/10 border-accent-custom text-accent-custom shadow-[0_0_15px_rgba(124,58,237,0.1)]'
-                      : 'bg-surface border-[#222222] text-[#444444]'
-                  }`}
-                  style={{ opacity: isActive ? 1.0 : 0.4 }}
-                >
-                  <IconComponent className="w-5 h-5" strokeWidth={1.5} />
+                    <AnimatePresence initial={false}>
+                      {isActive && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0, marginTop: 0 }}
+                          animate={{ height: "auto", opacity: 1, marginTop: 12 }}
+                          exit={{ height: 0, opacity: 0, marginTop: 0 }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="overflow-hidden"
+                        >
+                          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-[#a1a1aa] block mb-2">
+                            {p.subtitle}
+                          </span>
+                          <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-2xl">
+                            {p.desc}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 </div>
 
-                <div 
-                  className="transition-all duration-500 flex-1"
-                  style={{ opacity: isActive ? 1.0 : 0.4 }}
-                >
-                  <span className={`font-mono text-xs font-semibold tracking-[0.2em] uppercase transition-colors duration-350 ${
-                    isActive ? 'text-accent-custom' : 'text-[#666666]'
-                  }`}>
-                    Phase {p.phase} — {p.title}
-                  </span>
-                  
-                  <h3 className="font-display font-bold text-xl sm:text-2xl text-white mt-2 mb-4">
-                    {p.subtitle}
-                  </h3>
-                  
-                  <p className="process-desc-text text-sm sm:text-base leading-relaxed max-w-2xl transition-all duration-300">
-                    {p.desc}
-                  </p>
+                {/* Arrow indicator and visual container */}
+                <div className="mt-1 sm:mt-2 shrink-0">
+                  <div
+                    className={`relative flex items-center justify-center rounded-full border transition-all duration-300 w-10 h-10 sm:w-12 sm:h-12 ${
+                      isActive
+                        ? 'border-accent-custom/50 text-accent-custom bg-accent-custom/10 scale-105 shadow-[0_0_15px_rgba(124,58,237,0.15)]'
+                        : 'border-zinc-800 text-zinc-600 group-hover:border-zinc-700 group-hover:text-zinc-400'
+                    }`}
+                  >
+                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-
+            </div>
+          );
+        })}
       </div>
     </section>
   );
