@@ -506,17 +506,17 @@ export default function PortfolioSection() {
       </div>
 
       {/* Categories Filter Rail */}
-      <div className="flex flex-wrap gap-2 mb-12 reveal-on-scroll" style={{ transitionDelay: '50ms' }}>
+      <div className="flex flex-nowrap overflow-x-auto gap-3 mb-12 pb-3 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 reveal-on-scroll" style={{ transitionDelay: '50ms' }}>
         {categories.map((cat) => {
           const isActive = activeCategory === cat;
           return (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 text-xs uppercase font-mono tracking-wider transition-all duration-300 rounded focus:outline-none focus:ring-0 cursor-pointer ${
+              className={`px-4 py-2 text-xs uppercase font-mono tracking-wider transition-all duration-300 rounded shrink-0 focus:outline-none focus:ring-0 cursor-pointer ${
                 isActive
                   ? 'bg-accent-custom text-white font-semibold'
-                  : 'bg-[#111111]/40 text-[#666666] hover:text-[#f0f0f0] border border-[#222222]/50 hover:border-accent-custom/40'
+                  : 'bg-zinc-200/60 dark:bg-zinc-900/40 text-zinc-700 dark:text-[#a1a1aa] hover:text-zinc-955 hover:bg-zinc-200 dark:hover:text-[#f0f0f0] border border-zinc-300/80 dark:border-[#222222]/50 hover:border-accent-custom/40 dark:hover:border-accent-custom/40'
               }`}
             >
               {cat}

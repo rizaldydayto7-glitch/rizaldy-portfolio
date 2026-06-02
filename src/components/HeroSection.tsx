@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import type { MouseEvent } from 'react';
 
-const titles = ["Design Lead", "UI/UX Designer", "Product Thinker", "Creative Director"];
+const titles = [
+  "Senior UI/UX Designer | Design Lead",
+  "Senior UI/UX Designer",
+  "Design Lead"
+];
 
 export default function HeroSection() {
   const [displayName, setDisplayName] = useState("Rizaldy Dayto");
@@ -131,7 +135,7 @@ export default function HeroSection() {
         </div>
 
         {/* Short Bio */}
-        <p className="text-[#6ff9ff]/90 max-w-xl text-base sm:text-lg leading-relaxed text-[#666666] mb-12 reveal-on-scroll revealed">
+        <p className="hero-bio-text max-w-xl text-base sm:text-lg leading-relaxed mb-12 reveal-on-scroll revealed">
           Innovative design leader crafting high-fidelity human-centric experiences, standardizing scaled Design Systems, and translating complex problem sets into beautiful digital products.
         </p>
 

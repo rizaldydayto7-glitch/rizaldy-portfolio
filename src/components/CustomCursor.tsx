@@ -94,12 +94,12 @@ export default function CustomCursor() {
     <>
       <div
         ref={glowRef}
-        className="cursor-glow pointer-events-none fixed top-0 left-0 mix-blend-screen transition-opacity duration-300"
+        className="cursor-glow pointer-events-none fixed top-0 left-0 transition-opacity duration-300"
         style={{ transform: 'translate(-50%, -50%)' }}
       />
       <div
         ref={dotRef}
-        className="cursor-dot pointer-events-none fixed top-0 left-0 mix-blend-difference"
+        className="cursor-dot pointer-events-none fixed top-0 left-0"
       />
     </>
   );

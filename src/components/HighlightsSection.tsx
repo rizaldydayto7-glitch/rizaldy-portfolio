@@ -100,7 +100,7 @@ export default function HighlightsSection() {
                 transitionDuration: '300ms',
                 transformStyle: 'preserve-3d',
               }}
-              className="reveal-on-scroll glass-panel bg-surface border border-[#222222] p-8 rounded-lg relative overflow-hidden flex flex-col justify-between group active:scale-[0.98]"
+              className="reveal-on-scroll custom-card-container p-8 rounded-lg relative overflow-hidden flex flex-col justify-between group active:scale-[0.98]"
             >
               {/* Highlight background radial lighting */}
               <div

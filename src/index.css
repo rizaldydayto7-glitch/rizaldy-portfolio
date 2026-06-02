@@ -120,18 +120,64 @@
   z-index: 10000;
   transform: translate(-50%, -50%);
   transition: width 0.2s, height 0.2s, background-color 0.2s;
-  mix-blend-mode: difference;
 }
 
 .cursor-glow {
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.14) 0%, rgba(124, 58, 237, 0) 70%);
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, rgba(124, 58, 237, 0) 70%);
   position: fixed;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
   will-change: transform;
+}
+
+/* Custom container card that is always elegant subtle dark-slate gray with white text, in both modes */
+.custom-card-container {
+  background-color: #17181c !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-card-container h3, 
+.custom-card-container h4,
+.custom-card-container h5,
+.custom-card-container a,
+.custom-card-container span:not(.font-mono),
+.custom-card-container .text-white {
+  color: #ffffff !important;
+}
+
+.custom-card-container p,
+.custom-card-container .text-desc {
+  color: rgba(255, 255, 255, 0.65) !important; /* extremely clear and readable silver-zinc color */
+}
+
+.custom-card-container span.font-mono,
+.custom-card-container .font-mono {
+  color: #a1a1aa !important; /* perfectly legible secondary labels */
+}
+
+/* Highly legible, high-contrast text styles for both dark and light modes background */
+.about-paragraph-primary {
+  color: var(--text-primary) !important;
+}
+
+.about-paragraph-secondary {
+  color: var(--text-muted) !important;
+}
+
+.hero-bio-text {
+  color: var(--text-primary) !important;
+  opacity: 0.8;
+}
+
+.process-desc-text {
+  color: var(--text-primary) !important;
+  opacity: 0.75;
 }
 
 /* Smooth Scroll Reveal Base Styles */

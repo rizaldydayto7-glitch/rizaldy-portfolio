@@ -169,11 +169,15 @@ export default function ProcessSection() {
                       ? 'bg-accent-custom/10 border-accent-custom text-accent-custom shadow-[0_0_15px_rgba(124,58,237,0.1)]'
                       : 'bg-surface border-[#222222] text-[#444444]'
                   }`}
+                  style={{ opacity: isActive ? 1.0 : 0.4 }}
                 >
                   <IconComponent className="w-5 h-5" strokeWidth={1.5} />
                 </div>
 
-                <div>
+                <div 
+                  className="transition-all duration-500 flex-1"
+                  style={{ opacity: isActive ? 1.0 : 0.4 }}
+                >
                   <span className={`font-mono text-xs font-semibold tracking-[0.2em] uppercase transition-colors duration-350 ${
                     isActive ? 'text-accent-custom' : 'text-[#666666]'
                   }`}>
@@ -184,9 +188,7 @@ export default function ProcessSection() {
                     {p.subtitle}
                   </h3>
                   
-                  <p className={`text-sm sm:text-base leading-relaxed max-w-2xl transition-all duration-300 ${
-                    isActive ? 'text-[#f0f0f0]' : 'text-[#888888]'
-                  }`}>
+                  <p className="process-desc-text text-sm sm:text-base leading-relaxed max-w-2xl transition-all duration-300">
                     {p.desc}
                   </p>
                 </div>

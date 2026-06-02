@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { MouseEvent } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { href: '#hero', label: 'Home' },
@@ -17,26 +17,12 @@ export default function TheNav() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') || 'dark';
-    }
-    return 'dark';
-  });
 
   useEffect(() => {
     const root = window.document.documentElement;
-    if (theme === 'light') {
-      root.classList.add('light');
-    } else {
-      root.classList.remove('light');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+    root.classList.remove('light');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   useEffect(() => {
     // Scroll state for nav bar styling
@@ -101,10 +87,10 @@ export default function TheNav() {
         <a
           href="#hero"
           onClick={(e) => handleLinkClick(e, '#hero')}
-          className="text-white font-display text-lg tracking-wide hover:text-accent-custom transition-colors duration-300 flex items-center gap-1"
+          className="font-display text-lg tracking-wide hover:text-accent-custom transition-colors duration-300 flex items-center gap-1 text-white"
         >
           <span className="font-bold text-accent-custom tracking-wider">R</span>
-          <span className="font-light text-[#f0f0f0]/60">DAYTO</span>
+          <span className="font-light transition-colors duration-350 text-[#f0f0f0]/60">DAYTO</span>
         </a>
 
         {/* Desktop Navigation */}
@@ -128,18 +114,6 @@ export default function TheNav() {
               );
             })}
           </div>
-
-          <div className="h-5 w-[1px] bg-[#222222]/60 hidden md:block" />
-
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5 text-[#666666] hover:text-[#f0f0f0] transition-all duration-300 border border-[#222222]/30 hover:border-accent-custom/40 focus:outline-none focus:ring-0 cursor-pointer"
-            aria-label="Toggle visual theme"
-            title={theme === 'light' ? 'Activate Dark Mode' : 'Activate Light Mode'}
-          >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
 
           {/* Mobile Navigation Toggle */}
           <button

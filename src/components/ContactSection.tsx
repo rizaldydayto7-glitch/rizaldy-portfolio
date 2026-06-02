@@ -29,46 +29,46 @@ export default function ContactSection() {
         {/* Center aligned coordinates blocks with nice dark minimalist styling */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
           {/* Email coordinate */}
-          <div className="flex flex-col items-center p-6 rounded-lg border border-[#222222]/80 bg-[#111111]/40 hover:border-accent-custom/50 transition-all duration-300 group">
-            <div className="w-12 h-12 rounded-full border border-[#222222] bg bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 h-12 w-12 shrink-0">
+          <div className="flex flex-col items-center p-6 rounded-lg custom-card-container hover:border-accent-custom/50 transition-all duration-300 group">
+            <div className="w-12 h-12 rounded-full border border-[#222222] bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 shrink-0">
               <Mail className="w-5 h-5" />
             </div>
-            <span className="font-mono text-[10px] text-[#555] uppercase block mb-1">
+            <span className="font-mono text-[10px] text-zinc-400 uppercase block mb-1">
               Email
             </span>
             <a
               href="mailto:rizaldy.dayto.7@gmail.com"
-              className="font-medium text-white text-sm hover:text-accent-custom transition-all break-all"
+              className="font-medium text-white text-sm hover:text-accent-custom transition-all break-all text-white!"
             >
               rizaldy.dayto.7@gmail.com
             </a>
           </div>
 
           {/* Mobile coordinate */}
-          <div className="flex flex-col items-center p-6 rounded-lg border border-[#222222]/80 bg-[#111111]/40 hover:border-accent-custom/50 transition-all duration-300 group">
-            <div className="w-12 h-12 rounded-full border border-[#222222] bg bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 h-12 w-12 shrink-0">
+          <div className="flex flex-col items-center p-6 rounded-lg custom-card-container hover:border-accent-custom/50 transition-all duration-300 group">
+            <div className="w-12 h-12 rounded-full border border-[#222222] bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 shrink-0">
               <Phone className="w-5 h-5" />
             </div>
-            <span className="font-mono text-[10px] text-[#555] uppercase block mb-1">
+            <span className="font-mono text-[10px] text-zinc-400 uppercase block mb-1">
               Phone
             </span>
             <a
               href="tel:+639060972241"
-              className="font-medium text-white text-sm hover:text-accent-custom transition-all"
+              className="font-medium text-white text-sm hover:text-accent-custom transition-all text-white!"
             >
               +63 906 097 2241
             </a>
           </div>
 
           {/* Location coordinate */}
-          <div className="flex flex-col items-center p-6 rounded-lg border border-[#222222]/80 bg-[#111111]/40 hover:border-accent-custom/50 transition-all duration-300 group">
-            <div className="w-12 h-12 rounded-full border border-[#222222] bg bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 h-12 w-12 shrink-0">
+          <div className="flex flex-col items-center p-6 rounded-lg custom-card-container hover:border-accent-custom/50 transition-all duration-300 group">
+            <div className="w-12 h-12 rounded-full border border-[#222222] bg-[#111111] flex items-center justify-center text-[#666666] group-hover:text-accent-custom group-hover:border-accent-custom/50 transition-colors duration-300 mb-4 shrink-0">
               <MapPin className="w-5 h-5" />
             </div>
-            <span className="font-mono text-[10px] text-[#555] uppercase block mb-1">
+            <span className="font-mono text-[10px] text-zinc-400 uppercase block mb-1">
               Location
             </span>
-            <span className="font-medium text-[#b8b8b8] text-sm text-center">
+            <span className="font-medium text-white text-sm text-center">
               Quezon City, Philippines
             </span>
           </div>

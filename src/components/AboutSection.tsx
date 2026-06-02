@@ -10,10 +10,10 @@ export default function AboutSection() {
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
             Pioneering solutions at the intersection of design, empathy, and logic.
           </h2>
-          <p className="text-[#f0f0f0]/80 text-base sm:text-lg leading-relaxed mb-6">
+          <p className="about-paragraph-primary text-base sm:text-lg leading-relaxed mb-6">
             I am an innovative and results-driven Design Lead with 8 years of solid, multi-disciplinary experience spanning complex B2B desktop platforms, native iOS/Android mobile apps, and immersive consumer-facing websites.
           </p>
-          <p className="text-[#64748b] text-base leading-relaxed mb-8">
+          <p className="about-paragraph-secondary text-base leading-relaxed mb-8">
             Throughout my career, I've had the privilege of designing products for local and international blue-chip clients, establishing comprehensive Design Systems, and leading collaborative teams of designers and engineers. I believe design is not just about aesthetic beauty—it is a functional approach to planning, execution, and company strategy that directly drives product success.
           </p>
 
@@ -38,7 +38,7 @@ export default function AboutSection() {
 
         {/* Right Column: Contact info card */}
         <div className="lg:col-span-5 reveal-on-scroll" style={{ transitionDelay: '150ms' }}>
-          <div className="relative glass-panel bg-surface border border-[#222222] p-8 md:p-10 rounded-lg overflow-hidden group">
+          <div className="relative custom-card-container p-8 md:p-10 rounded-lg overflow-hidden group">
             {/* Soft background line highlights */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-accent-custom/5 rounded-full blur-3xl pointer-events-none group-hover:bg-accent-custom/10 transition-all duration-500" />
             

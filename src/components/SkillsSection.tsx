@@ -33,7 +33,7 @@ export default function SkillsSection() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
         {/* Core Methodology and Skills Group */}
-        <div className="bg-[#111111]/30 border border-[#222222]/50 p-8 sm:p-10 rounded-xl relative overflow-hidden reveal-on-scroll">
+        <div className="custom-card-container p-8 sm:p-10 rounded-xl relative overflow-hidden reveal-on-scroll">
           <div className="absolute top-0 left-0 w-full h-[3px] bg-accent-custom" />
           <h3 className="font-display font-bold text-xl text-white mb-8 flex items-center justify-between">
             <span>Methodology & Expertise</span>
@@ -56,7 +56,7 @@ export default function SkillsSection() {
         </div>
 
         {/* Software Tools Group */}
-        <div className="bg-[#111111]/30 border border-[#222222]/50 p-8 sm:p-10 rounded-xl relative overflow-hidden reveal-on-scroll" style={{ transitionDelay: '150ms' }}>
+        <div className="custom-card-container p-8 sm:p-10 rounded-xl relative overflow-hidden reveal-on-scroll" style={{ transitionDelay: '150ms' }}>
           <div className="absolute top-0 left-0 w-full h-[3px] bg-accent-cyan" />
           <h3 className="font-display font-bold text-xl text-white mb-8 flex items-center justify-between">
             <span>Software & Platforms</span>

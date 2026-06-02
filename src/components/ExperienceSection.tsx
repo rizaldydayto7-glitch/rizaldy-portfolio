@@ -73,10 +73,10 @@ export default function ExperienceSection() {
                 <div className={`w-full sm:w-1/2 pl-8 sm:pl-0 ${isLeft ? 'order-2 sm:pl-12' : 'order-1 sm:pr-12'}`}>
                   <div
                     onClick={() => setActiveIdx(isOpen ? null : index)}
-                    className={`glass-panel border rounded-lg p-6 sm:p-8 cursor-pointer transition-all duration-500 hover:scale-[1.01] ${
+                    className={`custom-card-container rounded-lg p-6 sm:p-8 cursor-pointer transition-all duration-500 hover:scale-[1.01] ${
                       isOpen
-                        ? 'border-accent-custom bg-accent-custom/[0.02] shadow-[0_4px_30px_rgba(124,58,237,0.05)]'
-                        : 'border-[#222222] hover:border-[#333333] bg-[#111111]/40'
+                        ? 'border-accent-custom! shadow-[0_4px_30px_rgba(124,58,237,0.15)] bg-slate-900!'
+                        : 'hover:border-zinc-700/80!'
                     }`}
                   >
                     <div className="flex justify-between items-start mb-4">
