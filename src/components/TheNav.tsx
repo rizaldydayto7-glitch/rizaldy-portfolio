@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { MouseEvent } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 const navLinks = [
   { href: '#hero', label: 'Home' },
@@ -17,6 +17,26 @@ export default function TheNav() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'dark';
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'light') {
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   useEffect(() => {
     // Scroll state for nav bar styling
@@ -88,34 +108,48 @@ export default function TheNav() {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.href.substring(1);
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href)}
-                className={`text-sm tracking-widest uppercase font-medium nav-link-underline transition-all duration-300 py-2 ${
-                  isActive
-                    ? 'text-accent-custom nav-link-active font-semibold'
-                    : 'text-[#666666] hover:text-[#f0f0f0]'
-                }`}
-              >
-                {link.label}
-              </a>
-            );
-          })}
-        </div>
+        <div className="flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleLinkClick(e, link.href)}
+                  className={`text-sm tracking-widest uppercase font-medium nav-link-underline transition-all duration-300 py-2 ${
+                    isActive
+                      ? 'text-accent-custom nav-link-active font-semibold'
+                      : 'text-[#666666] hover:text-[#f0f0f0]'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </div>
 
-        {/* Mobile Navigation Toggle */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/5 text-white focus:outline-none transition-all"
-          aria-label="Toggle navigation menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          <div className="h-5 w-[1px] bg-[#222222]/60 hidden md:block" />
+
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5 text-[#666666] hover:text-[#f0f0f0] transition-all duration-300 border border-[#222222]/30 hover:border-accent-custom/40 focus:outline-none focus:ring-0 cursor-pointer"
+            aria-label="Toggle visual theme"
+            title={theme === 'light' ? 'Activate Dark Mode' : 'Activate Light Mode'}
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+
+          {/* Mobile Navigation Toggle */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5 text-[#666666] hover:text-[#f0f0f0] focus:outline-none transition-all border border-[#222222]/30"
+            aria-label="Toggle navigation menu"
+          >
+            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Panel */}

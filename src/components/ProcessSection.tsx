@@ -184,7 +184,9 @@ export default function ProcessSection() {
                     {p.subtitle}
                   </h3>
                   
-                  <p className="text-sm sm:text-base text-[#666666] group-hover:text-[#999999] leading-relaxed max-w-2xl transition-colors duration-300">
+                  <p className={`text-sm sm:text-base leading-relaxed max-w-2xl transition-all duration-300 ${
+                    isActive ? 'text-[#f0f0f0]' : 'text-[#888888]'
+                  }`}>
                     {p.desc}
                   </p>
                 </div>
