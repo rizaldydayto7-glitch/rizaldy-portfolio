@@ -1,471 +1,125 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { MouseEvent } from 'react';
+import { projects } from '../data/portfolioData';
+import type { ProjectItem } from '../data/portfolioData';
+import { X, Calendar, User, Cpu, Award, Building, Sparkles } from 'lucide-react';
 
-const projects = [
-  // Page 1: Automobile
-  {
-    id: "a1",
-    title: "Driving School Customer Portal",
-    client: "SMART DRIVING SCHOOL",
-    category: "Customer Portal",
-    industry: "AUTOMOBILE",
-    colorFrom: "#021132",
-    colorTo: "#051647"
-  },
-  {
-    id: "a2",
-    title: "Distributor, Dealer & Customer Portal",
-    client: "Kawasaki Japan (Global)",
-    category: "Distributor, Dealer & Customer Portal",
-    industry: "AUTOMOBILE",
-    colorFrom: "#3f0a0a",
-    colorTo: "#5f1111"
-  },
-  {
-    id: "a3",
-    title: "Informative Website",
-    client: "Honda",
-    category: "Informative Website",
-    industry: "AUTOMOBILE",
-    colorFrom: "#1e293b",
-    colorTo: "#334155"
-  },
-  
-  // Page 2: E-Commerce Package
-  {
-    id: "e1",
-    title: "Website, Web Application, Mobile App",
-    client: "Super 8",
-    category: "Comprehensive E-Commerce Suite",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#1c1917",
-    colorTo: "#292524"
-  },
-  {
-    id: "e2",
-    title: "Ecommerce Website",
-    client: "funhanmart Korean Convenience Store",
-    category: "Ecommerce Website",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#022c22",
-    colorTo: "#064e3b"
-  },
-  {
-    id: "e3",
-    title: "Carmen's Best Digital Suite",
-    client: "Carmen's Best",
-    category: "Web & Product Showcase",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#172554",
-    colorTo: "#1e3a8a"
-  },
-  {
-    id: "e4",
-    title: "Centro Department Store",
-    client: "centro Department Store",
-    category: "Digital Omni-Store App",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#3b0764",
-    colorTo: "#1e1b4b"
-  },
-  {
-    id: "e5",
-    title: "Ecommerce Website",
-    client: "OVERSPEC'D",
-    category: "Ecommerce Website",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#3f3f46",
-    colorTo: "#18181b"
-  },
-  {
-    id: "e6",
-    title: "TrinityCare Digital Suite",
-    client: "TrinityCare",
-    category: "Mobile & Web Solution",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#065f46",
-    colorTo: "#047857"
-  },
-  {
-    id: "e7",
-    title: "TrinityHealth Philippines Portal",
-    client: "TrinityHealth PHILIPPINES",
-    category: "Healthcare Partner Web App",
-    industry: "E-COMMERCE PACKAGE",
-    colorFrom: "#1d4ed8",
-    colorTo: "#1e40af"
-  },
-
-  // Page 3: Electronics / Appliances
-  {
-    id: "el1",
-    title: "Customer Warranty Website",
-    client: "American Home Appliances",
-    category: "Customer Warranty Website",
-    industry: "ELECTRONICS / APPLIANCES",
-    colorFrom: "#111827",
-    colorTo: "#1f2937"
-  },
-
-  // Page 3: Energy / Power ...
-  {
-    id: "en1",
-    title: "Internal Mobile App",
-    client: "AboitizPower",
-    category: "Internal Mobile App",
-    industry: "ENERGY / POWER / RENEWABLES / GAS / OIL",
-    colorFrom: "#14532d",
-    colorTo: "#064e3b"
-  },
-  {
-    id: "en2",
-    title: "Tablet App & Warehouse Reporting",
-    client: "Ramcar Batteries, Inc.",
-    category: "Warehouse Reporting System",
-    industry: "ENERGY / POWER / RENEWABLES / GAS / OIL",
-    colorFrom: "#172554",
-    colorTo: "#1e3a8a"
-  },
-
-  // Page 3: Real Estate / Construction
-  {
-    id: "c1",
-    title: "Informative Mobile App",
-    client: "Vista Residences",
-    category: "Informative Mobile App",
-    industry: "CONSTRUCTION / REAL ESTATE / ARCHITECTURE",
-    colorFrom: "#022c22",
-    colorTo: "#14532d"
-  },
-  {
-    id: "c2",
-    title: "Owner's App",
-    client: "Moldex Realty",
-    category: "Owner's App",
-    industry: "CONSTRUCTION / REAL ESTATE / ARCHITECTURE",
-    colorFrom: "#7c2d12",
-    colorTo: "#451a03"
-  },
-
-  // Page 4: Education
-  {
-    id: "ed1",
-    title: "Informative Website",
-    client: "T.I.P. Technological Institute of the Philippines",
-    category: "Informative Website",
-    industry: "EDUCATION",
-    colorFrom: "#451a03",
-    colorTo: "#78350f"
-  },
-  {
-    id: "ed2",
-    title: "Informative Website",
-    client: "De La Salle Lipa",
-    category: "Informative Website",
-    industry: "EDUCATION",
-    colorFrom: "#064e3b",
-    colorTo: "#0f5132"
-  },
-
-  // Page 5: Experience
-  {
-    id: "ex1",
-    title: "E-Commerce + Experiential & Internal Marketplace",
-    client: "Tao",
-    category: "Internal Marketplace Management",
-    industry: "EXPERIENCE",
-    colorFrom: "#7c2d12",
-    colorTo: "#78350f"
-  },
-  {
-    id: "ex2",
-    title: "Internal Mobile App & Booking",
-    client: "Visita",
-    category: "Booking Management",
-    industry: "EXPERIENCE",
-    colorFrom: "#581c87",
-    colorTo: "#3b0764"
-  },
-  {
-    id: "ex3",
-    title: "Customer Web App & Booking Portal",
-    client: "Masungi Georeserve",
-    category: "Customer Booking Portal",
-    industry: "EXPERIENCE",
-    colorFrom: "#0d5c3a",
-    colorTo: "#063c26"
-  },
-  {
-    id: "ex4",
-    title: "Experiential Mobile App & Museum Experience",
-    client: "Megaworld & Lucky Chinatown",
-    category: "Museum Experience App",
-    industry: "EXPERIENCE",
-    colorFrom: "#4c0519",
-    colorTo: "#701a75"
-  },
-
-  // Page 6: Fintech & F&B
-  {
-    id: "f1",
-    title: "Customer Mobile App & Claim Portal",
-    client: "Cocogen Insurance",
-    category: "Insurance Claim Portal",
-    industry: "FIN TECH / BANKING / INSURANCE",
-    colorFrom: "#065f46",
-    colorTo: "#047857"
-  },
-  {
-    id: "fb1",
-    title: "Mobile App & Sales Force Automation",
-    client: "Pepsi",
-    category: "Sales Force Automation Mobile App",
-    industry: "FOOD & BEVERAGES",
-    colorFrom: "#1e3a8a",
-    colorTo: "#1d4ed8"
-  },
-  {
-    id: "fa1",
-    title: "Informative Website",
-    client: "Purificacion Orchids and Ornamentals",
-    category: "Informative Website",
-    industry: "FARMING / FLOWERSHOP",
-    colorFrom: "#4d1a7f",
-    colorTo: "#5b21b6"
-  },
-
-  // Page 7: Industrial & Logistics
-  {
-    id: "ind1",
-    title: "Customer Mobile App — Machine & Loyalty",
-    client: "Kubota",
-    category: "Machine Management and Loyalty App",
-    industry: "INDUSTRIAL / EQUIPMENT / REPAIR",
-    colorFrom: "#0891b2",
-    colorTo: "#0e7490"
-  },
-  {
-    id: "ind2",
-    title: "Internal Web App — Production Management System",
-    client: "Logos Creative Office Phils Inc.",
-    category: "Production Management System",
-    industry: "INDUSTRIAL / EQUIPMENT / REPAIR",
-    colorFrom: "#1e293b",
-    colorTo: "#0f172a"
-  },
-  {
-    id: "log1",
-    title: "Internal App & Warehouse Tracking",
-    client: "Adsia Logistics",
-    category: "Warehouse Tracking App",
-    industry: "LOGISTICS",
-    colorFrom: "#166534",
-    colorTo: "#14532d"
-  },
-  {
-    id: "log2",
-    title: "Informative Website & Logistic Tracking",
-    client: "Airtropolis Consolidator Phils., Inc.",
-    category: "Logistic Tracking System",
-    industry: "LOGISTICS",
-    colorFrom: "#1d4ed8",
-    colorTo: "#1e40af"
-  },
-
-  // Page 8: Healthcare
-  {
-    id: "h1",
-    title: "Web App & Patient / Doctor Portal",
-    client: "Relaymed Health Solutions",
-    category: "Patient & Doctor's Portal",
-    industry: "HEALTHCARE & MEDICAL TECH",
-    colorFrom: "#be123c",
-    colorTo: "#9f1239"
-  },
-  {
-    id: "h2",
-    title: "Patient Portal Mobile App",
-    client: "Menarini Group",
-    category: "Patient Portal Mobile App",
-    industry: "HEALTHCARE & MEDICAL TECH",
-    colorFrom: "#581c87",
-    colorTo: "#4a044e"
-  },
-  {
-    id: "h3",
-    title: "Website & Mobile App Portal (Online Consultation, Booking, etc)",
-    client: "TrinityCare",
-    category: "Doctor and Patient Portal",
-    industry: "HEALTHCARE & MEDICAL TECH",
-    colorFrom: "#047857",
-    colorTo: "#065f46"
-  },
-
-  // Page 8: Home
-  {
-    id: "ho1",
-    title: "Informative Website",
-    client: "World Home Depot Corporation",
-    category: "Informative Website",
-    industry: "HOME",
-    colorFrom: "#065f46",
-    colorTo: "#166534"
-  },
-  {
-    id: "ho2",
-    title: "Informative Website",
-    client: "Lazuli",
-    category: "Informative Website",
-    industry: "HOME",
-    colorFrom: "#1f2937",
-    colorTo: "#111827"
-  },
-
-  // Page 9: Lifestyle & NGO
-  {
-    id: "l1",
-    title: "Internal App — Stewards App (Dogshow)",
-    client: "Philippine Canine Club, Inc. (PCCI)",
-    category: "Dogshow Competition App",
-    industry: "LIFESTYLE",
-    colorFrom: "#991b1b",
-    colorTo: "#7f1d1d"
-  },
-  {
-    id: "l2",
-    title: "Mobile App & Admin Backend — Fitness & Booking",
-    client: "Perigon",
-    category: "Fitness App and Booking",
-    industry: "LIFESTYLE",
-    colorFrom: "#27272a",
-    colorTo: "#18181b"
-  },
-  {
-    id: "n1",
-    title: "Informative Website",
-    client: "PAFCPIC",
-    category: "Informative Website",
-    industry: "NON-GOVERNMENT ORGANIZATION",
-    colorFrom: "#15803d",
-    colorTo: "#166534"
-  },
-  {
-    id: "n2",
-    title: "Informative Website",
-    client: "S.S.A. Corp",
-    category: "Informative Website",
-    industry: "NON-GOVERNMENT ORGANIZATION",
-    colorFrom: "#581c87",
-    colorTo: "#4a044e"
-  },
-  {
-    id: "n3",
-    title: "Internal System",
-    client: "Child Protection Network",
-    category: "Internal System",
-    industry: "NON-GOVERNMENT ORGANIZATION",
-    colorFrom: "#be123c",
-    colorTo: "#9f1239"
-  },
-
-  // Page 10: Retail & Safety
-  {
-    id: "r1",
-    title: "Informative Website & Gift Registry Website",
-    client: "Toys \"R\" Us",
-    category: "Gift Registry Website",
-    industry: "RETAIL",
-    colorFrom: "#a21caf",
-    colorTo: "#86198f"
-  },
-  {
-    id: "s1",
-    title: "Internal System & Security App",
-    client: "Unilab Trusted Quality Healthcare",
-    category: "Security App & Internal System",
-    industry: "SAFETY",
-    colorFrom: "#1d4ed8",
-    colorTo: "#1e40af"
-  },
-  {
-    id: "w1",
-    title: "E-Commerce Website",
-    client: "AQ Skin Solutions",
-    category: "Skincare E-Commerce site",
-    industry: "SKINCARE, BEAUTY AND WELLNESS",
-    colorFrom: "#3f3f46",
-    colorTo: "#27272a"
-  },
-  {
-    id: "d1",
-    title: "Customer Web App — Video-Editing Request",
-    client: "Terraflic",
-    category: "Video-Editing Request management",
-    industry: "DIGITAL AGENCY",
-    colorFrom: "#0284c7",
-    colorTo: "#0369a1"
-  },
-
-  // Page 11: Space
-  {
-    id: "sp1",
-    title: "Internal System — Tenant Management System",
-    client: "Dormiko",
-    category: "Tenant Management System",
-    industry: "SPACE",
-    colorFrom: "#111827",
-    colorTo: "#1f2937"
-  },
-  {
-    id: "sp2",
-    title: "Informative Website",
-    client: "Cazza (Zamora Residences)",
-    category: "Informative Website",
-    industry: "SPACE",
-    colorFrom: "#7c2d12",
-    colorTo: "#451a03"
-  }
-];
+const logoFiles: Record<string, string> = {
+  "p1": "purification.png",
+  "p2": "TaoPhilippines.png",
+  "p3": "kawasaki.png",
+  "p4": "kubota.png",
+  "p5": "TIP.png",
+  "p7": "world home depot.png",
+  "p8": "", // Nature's Spring
+  "p9": "adsia.png",
+  "p10": "honda.png",
+  "p11": "de la salle.png",
+  "p12": "unilab.png",
+  "p13": "carments best.png",
+  "p17": "the spa.png",
+  "p18": "victory christian fellowship.png",
+  "p19": "kidzooona.png",
+  "p22": "doj.png",
+  "p25": "smart driving school.png",
+  "p26": "super8.png",
+  "p27": "funhan mart.png",
+  "p28": "centro.png",
+  "p29": "overspec'd.png",
+  "p30": "american home.png",
+  "p31": "aboitiz.png",
+  "p32": "vista residences.png",
+  "p33": "moldex.png",
+  "p35": "visita.png",
+  "p36": "masungi.png",
+  "p37": "megaworld.png",
+  "p38": "cocogen.png",
+  "p39": "pepsi.png",
+  "p40": "logos.png",
+  "p41": "airtropolis.png",
+  "p42": "relaymed.png",
+  "p43": "menarini.png",
+  "p44": "lazuli.png",
+  "p45": "PCCI.png",
+  "p46": "perigon.png",
+  "p47": "pafcpic.png",
+  "p48": "ssa corp.png",
+  "p49": "child protection.png",
+  "p50": "toys r us.png",
+  "p51": "AQSkin.png",
+  "p52": "terraflic.png",
+  "p53": "dormiko.png",
+  "p54": "cazza zamora.png",
+  "p55": "trinityhealth.png",
+  "p56": "triniycare.png"
+};
 
 export default function PortfolioSection() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [selectedClient, setSelectedClient] = useState<(ProjectItem & { logo: string }) | null>(null);
 
   const categories = [
-    "All", 
-    "Ecommerce & Retail", 
-    "Corporate & Space", 
-    "Experience & Lifestyle", 
-    "Industry & Logistics", 
-    "NGO & Education", 
-    "Healthcare", 
-    "Real Estate & Home"
+    "All",
+    "E-Commerce & Retail",
+    "Healthcare & Skincare",
+    "Automobile & Industry",
+    "Real Estate & Space",
+    "Experience & Lifestyle",
+    "Other Sectors"
   ];
 
-  const filteredProjects = projects.filter(p => {
-    if (activeCategory === "All") return true;
-    if (activeCategory === "Ecommerce & Retail") {
-      return p.industry === "E-COMMERCE PACKAGE" || p.industry === "RETAIL" || p.industry === "SKINCARE, BEAUTY AND WELLNESS";
-    }
-    if (activeCategory === "Corporate & Space") {
-      return p.industry === "AUTOMOBILE" || p.industry === "ELECTRONICS / APPLIANCES" || p.industry === "ENERGY / POWER / RENEWABLES / GAS / OIL" || p.industry === "SPACE" || p.industry === "DIGITAL AGENCY";
-    }
-    if (activeCategory === "Experience & Lifestyle") {
-      return p.industry === "EXPERIENCE" || p.industry === "FOOD & BEVERAGES" || p.industry === "FARMING / FLOWERSHOP" || p.industry === "LIFESTYLE";
-    }
-    if (activeCategory === "Industry & Logistics") {
-      return p.industry === "INDUSTRIAL / EQUIPMENT / REPAIR" || p.industry === "LOGISTICS" || p.industry === "SAFETY";
-    }
-    if (activeCategory === "NGO & Education") {
-      return p.industry === "NON-GOVERNMENT ORGANIZATION" || p.industry === "EDUCATION";
-    }
-    if (activeCategory === "Healthcare") {
-      return p.industry === "HEALTHCARE & MEDICAL TECH";
-    }
-    if (activeCategory === "Real Estate & Home") {
-      return p.industry === "CONSTRUCTION / REAL ESTATE / ARCHITECTURE" || p.industry === "HOME";
-    }
-    return true;
+  const enrichedProjects = projects.map(p => {
+    const fileName = logoFiles[p.id];
+    return {
+      ...p,
+      logo: fileName ? `/clients/${fileName}` : ""
+    };
   });
+
+  const filteredProjects = enrichedProjects.filter(p => {
+    if (activeCategory === "All") return true;
+    return p.category === activeCategory;
+  });
+
+  // Track key press to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedClient(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Sync Intersection Observer for scroll reveal when categories are filtered
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.05,
+        rootMargin: '0px 0px -50px 0px',
+      }
+    );
+
+    const elements = document.querySelectorAll('#clients .reveal-on-scroll');
+    elements.forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => {
+      elements.forEach((el) => {
+        observer.unobserve(el);
+      });
+    };
+  }, [activeCategory]);
 
   const handleTileMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
@@ -476,37 +130,46 @@ export default function PortfolioSection() {
     const relativeX = (x / rect.width) - 0.5;
     const relativeY = (y / rect.height) - 0.5;
     
-    const maxTilt = 8;
+    const maxTilt = 10;
     const tiltY = relativeX * maxTilt;
     const tiltX = -relativeY * maxTilt;
     
-    card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.01, 1.01, 1.01)`;
+    card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
   const handleTileMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
     const card = e.currentTarget;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+    card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
   };
 
   return (
-    <section id="portfolio" className="py-24 sm:py-32 px-6 max-w-[1200px] mx-auto border-t border-[#222222]/30">
+    <section id="clients" className="py-24 sm:py-32 px-6 max-w-[1240px] mx-auto border-t border-[#222222]/30 relative">
+      {/* Upper Subtle Background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-custom/5 blur-[120px] rounded-full pointer-events-none" />
+
       {/* Section Title */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 reveal-on-scroll animate-fade-in">
+      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 reveal-on-scroll">
         <div>
           <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666] mb-3 block">
-            07 / Works
+            07 / Portfolio
           </span>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            Selected Works
+            My Clients
           </h2>
         </div>
-        <div className="text-sm font-mono text-[#666666] shrink-0 border-l border-[#222222] pl-6 h-10 flex items-center">
-          {projects.length} Total Projects Managed
+        <div className="text-sm font-mono text-accent-cyan/90 shrink-0 border-l border-[#222222]/25 pl-6 h-10 flex items-center">
+          {projects.length} Trusted Brands & Institutional Partners
         </div>
       </div>
 
+      {/* Interactive Helper Hint */}
+      <div className="mb-8 flex items-center gap-2 text-zinc-500 font-mono text-xs uppercase tracking-wider select-none animate-pulse">
+        <Sparkles size={13} className="text-accent-cyan" />
+        <span>Click any client logo below to view product details & impact</span>
+      </div>
+
       {/* Categories Filter Rail */}
-      <div className="flex flex-nowrap overflow-x-auto gap-3 mb-12 pb-3 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 reveal-on-scroll" style={{ transitionDelay: '50ms' }}>
+      <div className="flex flex-nowrap overflow-x-auto gap-2.5 mb-12 pb-3 scrollbar-none max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 select-none">
         {categories.map((cat) => {
           const isActive = activeCategory === cat;
           return (
@@ -515,8 +178,8 @@ export default function PortfolioSection() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 text-xs uppercase font-mono tracking-wider transition-all duration-300 rounded shrink-0 focus:outline-none focus:ring-0 cursor-pointer ${
                 isActive
-                  ? 'bg-accent-custom text-white font-semibold'
-                  : 'bg-zinc-200/60 dark:bg-zinc-900/40 text-zinc-700 dark:text-[#a1a1aa] hover:text-zinc-955 hover:bg-zinc-200 dark:hover:text-[#f0f0f0] border border-zinc-300/80 dark:border-[#222222]/50 hover:border-accent-custom/40 dark:hover:border-accent-custom/40'
+                  ? 'bg-accent-custom text-white font-semibold shadow-[0_0_12px_rgba(124,58,237,0.35)]'
+                  : 'bg-zinc-900/40 text-[#a1a1aa] hover:text-[#f0f0f0] border border-[#222222]/50 hover:border-accent-custom/40 transition-colors'
               }`}
             >
               {cat}
@@ -525,83 +188,149 @@ export default function PortfolioSection() {
         })}
       </div>
 
-      {/* Projects Grid with 3D Tilt and Hover scale */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+      {/* High-density Client Logo Board Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {filteredProjects.map((p, index) => {
           return (
             <div
               key={p.id}
+              onClick={() => setSelectedClient(p)}
               onMouseMove={handleTileMouseMove}
               onMouseLeave={handleTileMouseLeave}
               style={{
-                transitionDelay: `${(index % 2) * 50}ms`,
+                transitionDelay: `${(index % 6) * 20}ms`,
                 transformStyle: 'preserve-3d',
+                background: `linear-gradient(135deg, ${p.colorFrom}0b 0%, ${p.colorTo}07 100%)`,
               }}
-              className="reveal-on-scroll group flex flex-col justify-between"
+              className="reveal-on-scroll group relative aspect-square w-full rounded-xl overflow-hidden border border-zinc-800/45 hover:border-accent-cyan/40 bg-zinc-950/20 hover:bg-zinc-950/80 transition-all duration-300 flex flex-col items-center justify-center p-5 cursor-pointer shadow-lg select-none"
+              title={`Click to view ${p.client}`}
             >
-              {/* Image gradient area placeholder with absolute ratio and hover zoom overlay */}
-              <div
-                style={{
-                  background: `linear-gradient(135deg, ${p.colorFrom} 0%, ${p.colorTo} 100%)`,
-                }}
-                className="relative aspect-[16/10] w-full rounded-lg overflow-hidden border border-[#222222]/80 group-hover:border-accent-custom/50 shadow-lg select-none cursor-default transition-all duration-500"
-              >
-                {/* Visual mesh wireframe look */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-                
-                {/* Project title text as abstract mockup element inside card */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center bg-black/10 select-none">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-white/20 mb-3">
-                    {p.industry}
-                  </span>
-                  <p className="font-display font-bold text-xl sm:text-2xl text-white/50 group-hover:text-white/20 transition-all duration-500 ease-out uppercase tracking-wider scale-95 leading-normal max-w-full">
-                    {p.client}
-                  </p>
-                  <p className="font-mono text-[10px] text-white/25 mt-2 transition-colors duration-500">
-                    {p.title}
-                  </p>
-                </div>
-
-                {/* Overlaid sliding details overview - unclickable, purely informative */}
-                <div className="absolute inset-0 bg-black/95 backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center select-none">
-                  <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-accent-cyan mb-3">
-                    Verified Portfolio Client
-                  </span>
-                  <div className="text-white font-display text-lg font-extrabold tracking-tight mb-2">
+              {/* Centerpiece Vector Brand Logo */}
+              <div className="w-full h-full flex items-center justify-center text-center transform group-hover:scale-105 transition-transform duration-300 ease-out">
+                {p.logo ? (
+                  <img
+                    src={p.logo}
+                    alt={p.client}
+                    className="h-14 w-auto max-w-[90%] object-contain transition-transform duration-300 hover:scale-105"
+                  />
+                ) : (
+                  <div className="text-zinc-400 font-extrabold text-sm tracking-tight text-center px-2 uppercase font-mono break-words leading-tight">
                     {p.client}
                   </div>
-                  <span className="h-[1px] w-8 bg-accent-custom my-2" />
-                  <p className="font-mono text-[11px] text-[#888888] tracking-widest uppercase mt-1">
-                    {p.industry}
-                  </p>
-                  <p className="text-xs text-[#666666] mt-2 italic px-4">
-                    {p.category}
-                  </p>
-                  <div className="mt-5 px-3 py-1 border border-white/10 rounded font-mono text-[9px] text-white/40 uppercase tracking-widest">
-                    Design Schema Locked
-                  </div>
-                </div>
+                )}
               </div>
 
-              {/* Title & Metadata layout footer */}
-              <div className="mt-5 flex justify-between items-start px-2">
-                <div className="max-w-[70%]">
-                  <h3 className="text-[#f0f0f0] font-bold text-base leading-snug group-hover:text-accent-custom transition-colors duration-300 truncate">
-                    {p.client}
-                  </h3>
-                  <p className="text-xs text-[#666666] font-mono mt-1 uppercase tracking-wider truncate">
-                    {p.title}
-                  </p>
-                </div>
-                
-                <span className="text-[10px] font-mono text-accent-cyan uppercase bg-accent-cyan/5 border border-accent-cyan/15 px-2 py-0.5 rounded inline-block max-w-[30%] truncate">
-                  {p.industry.split(' / ')[0]}
-                </span>
-              </div>
+              {/* Hover highlight decorative borders */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-tl" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-br" />
+
+              {/* PNG Indicator Badge inline (subtle top-right) */}
+              <span className="absolute top-2 right-2 text-[7px] font-mono text-zinc-600 group-hover:text-amber-400/80 tracking-widest transition-colors">
+                {p.year}
+              </span>
             </div>
           );
         })}
       </div>
+
+      {/* Immersive Client Details Overlay Modal */}
+      {selectedClient && (
+        <div 
+          onClick={() => setSelectedClient(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-zinc-950/95 border border-zinc-800/80 p-6 sm:p-8 rounded-2xl max-w-[500px] w-full relative overflow-hidden shadow-2xl flex flex-col"
+          >
+            {/* Close Button Trigger */}
+            <button
+              onClick={() => setSelectedClient(null)}
+              className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 p-2 rounded-full cursor-pointer transition-all border border-zinc-800"
+              aria-label="Close client details"
+            >
+              <X size={15} />
+            </button>
+
+            {/* Giant Colorful Logo Header Display */}
+            <div 
+              style={{ 
+                background: `linear-gradient(135deg, ${selectedClient.colorFrom}dd 0%, ${selectedClient.colorTo} 100%)` 
+              }} 
+              className="p-8 rounded-xl border border-white/10 flex items-center justify-center mb-6 aspect-[16/9] overflow-hidden relative select-none shadow-inner"
+            >
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:12px_12px]" />
+              <div className="scale-110 transform transition-transform duration-500 max-w-[85%] max-h-[85%] flex items-center justify-center">
+                {selectedClient.logo ? (
+                  <img
+                    src={selectedClient.logo}
+                    alt={selectedClient.client}
+                    className="max-h-24 max-w-full object-contain filter drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                  />
+                ) : (
+                  <div className="text-white font-black text-xl tracking-wider uppercase font-mono text-center">
+                    {selectedClient.client}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Client Context Details Grid */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-accent-cyan">
+                  Case Record Overview
+                </span>
+                <h3 className="text-xl font-extrabold text-white tracking-tight mt-0.5">
+                  {selectedClient.client}
+                </h3>
+              </div>
+
+              <div className="h-[1px] w-full bg-zinc-800" />
+
+              {/* Attributes block */}
+              <div className="grid grid-cols-2 gap-4 text-xs font-mono text-[#b3b3b3]">
+                <div className="bg-zinc-900/40 p-2.5 rounded border border-zinc-800/45 flex items-center gap-2.5">
+                  <Calendar size={14} className="text-accent-cyan shrink-0" />
+                  <div className="truncate">
+                    <div className="text-zinc-500 text-[9px] uppercase tracking-wider">LATEST RELEASE</div>
+                    <div className="text-white font-bold mt-0.5">{selectedClient.year}</div>
+                  </div>
+                </div>
+
+                <div className="bg-zinc-900/40 p-2.5 rounded border border-zinc-800/45 flex items-center gap-2.5">
+                  <Building size={14} className="text-emerald-400 shrink-0" />
+                  <div className="truncate">
+                    <div className="text-zinc-500 text-[9px] uppercase tracking-wider">INDUSTRY</div>
+                    <div className="text-emerald-400 font-semibold mt-0.5 truncate" title={selectedClient.industry}>
+                      {selectedClient.industry}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-zinc-900/40 p-2.5 rounded border border-zinc-800/45 flex items-center gap-2.5">
+                  <Cpu size={14} className="text-sky-400 shrink-0" />
+                  <div className="truncate">
+                    <div className="text-zinc-500 text-[9px] uppercase tracking-wider">SYSTEM / PLATFORM</div>
+                    <div className="text-white mt-0.5 truncate">{selectedClient.platform}</div>
+                  </div>
+                </div>
+
+                <div className="bg-zinc-900/40 p-2.5 rounded border border-zinc-800/45 flex items-center gap-2.5">
+                  <User size={14} className="text-amber-400 shrink-0" />
+                  <div className="truncate">
+                    <div className="text-zinc-500 text-[9px] uppercase tracking-wider">MY ROLE PARTNER</div>
+                    <div className="text-white mt-0.5 truncate">{selectedClient.role}</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

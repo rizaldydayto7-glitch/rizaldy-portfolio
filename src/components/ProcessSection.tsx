@@ -59,9 +59,8 @@ export default function ProcessSection() {
             06 / Workflow
           </span>
         </div>
-        <h2 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-[1.1] mb-6">
-          My Creative <br />
-          <span className="font-serif italic text-accent-custom tracking-wide">Process</span>
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
+          My Creative Process
         </h2>
         <p className="text-zinc-500 max-w-xl text-sm sm:text-base leading-relaxed">
           A structured 6-phase journey from abstract product alignment to robust, scalable and developers-ready systems.
