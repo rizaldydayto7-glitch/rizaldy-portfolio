@@ -30,7 +30,7 @@ const experiences = [
 ];
 
 export default function ExperienceSection() {
-  const [activeIdx, setActiveIdx] = useState<number | null>(0);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   return (
     <section id="experience" className="py-24 sm:py-32 px-6 max-w-[1200px] mx-auto border-t border-[#222222]/30">

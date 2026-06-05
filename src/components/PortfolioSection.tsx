@@ -143,94 +143,92 @@ export default function PortfolioSection() {
   };
 
   return (
-    <section id="clients" className="py-24 sm:py-32 px-6 max-w-[1240px] mx-auto border-t border-[#222222]/30 relative">
+    <section id="clients" className="py-24 sm:py-32 px-6 sm:px-12 md:px-16 lg:px-20 w-full max-w-none mx-auto border-t border-[#222222]/30 relative">
       {/* Upper Subtle Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-custom/5 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* Section Title */}
-      <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 reveal-on-scroll">
-        <div>
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666] mb-3 block">
-            07 / Portfolio
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-            My Clients
-          </h2>
+      {/* Contained Centered Content Area with Left Alignment */}
+      <div className="max-w-[1400px] w-full mx-auto relative z-10 flex flex-col items-start text-left">
+        {/* Section Title */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 reveal-on-scroll w-full text-left">
+          <div className="text-left">
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666] mb-3 block">
+              07 / Portfolio
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+              My Clients
+            </h2>
+          </div>
+          <div className="text-sm font-mono text-accent-cyan/90 shrink-0 border-l border-[#222222]/25 pl-6 h-10 flex items-center">
+            {projects.length} Trusted Brands & Institutional Partners
+          </div>
         </div>
-        <div className="text-sm font-mono text-accent-cyan/90 shrink-0 border-l border-[#222222]/25 pl-6 h-10 flex items-center">
-          {projects.length} Trusted Brands & Institutional Partners
+
+        {/* Interactive Helper Hint */}
+        <div className="mb-8 flex items-center gap-2 text-zinc-500 font-mono text-xs uppercase tracking-wider select-none animate-pulse w-full text-left justify-start">
+          <Sparkles size={13} className="text-accent-cyan" />
+          <span className="text-left">Click any client logo below to view product details & impact</span>
         </div>
-      </div>
 
-      {/* Interactive Helper Hint */}
-      <div className="mb-8 flex items-center gap-2 text-zinc-500 font-mono text-xs uppercase tracking-wider select-none animate-pulse">
-        <Sparkles size={13} className="text-accent-cyan" />
-        <span>Click any client logo below to view product details & impact</span>
-      </div>
+        {/* Categories Filter Rail */}
+        <div className="flex flex-nowrap overflow-x-auto gap-2.5 mb-12 pb-3 scrollbar-none max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 select-none w-full justify-start">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 text-xs uppercase font-mono tracking-wider transition-all duration-300 rounded shrink-0 focus:outline-none focus:ring-0 cursor-pointer ${
+                  isActive
+                    ? 'bg-accent-custom text-white font-semibold shadow-[0_0_12px_rgba(124,58,237,0.35)]'
+                    : 'bg-zinc-900/40 text-[#a1a1aa] hover:text-[#f0f0f0] border border-[#222222]/50 hover:border-accent-custom/40 transition-colors'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
 
-      {/* Categories Filter Rail */}
-      <div className="flex flex-nowrap overflow-x-auto gap-2.5 mb-12 pb-3 scrollbar-none max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 select-none">
-        {categories.map((cat) => {
-          const isActive = activeCategory === cat;
-          return (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 text-xs uppercase font-mono tracking-wider transition-all duration-300 rounded shrink-0 focus:outline-none focus:ring-0 cursor-pointer ${
-                isActive
-                  ? 'bg-accent-custom text-white font-semibold shadow-[0_0_12px_rgba(124,58,237,0.35)]'
-                  : 'bg-zinc-900/40 text-[#a1a1aa] hover:text-[#f0f0f0] border border-[#222222]/50 hover:border-accent-custom/40 transition-colors'
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
-      </div>
+        {/* High-density Client Logo Board Grid */}
+        <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-3 sm:gap-4 w-full">
+          {filteredProjects.map((p, index) => {
+            return (
+              <div
+                key={p.id}
+                onClick={() => setSelectedClient(p)}
+                onMouseMove={handleTileMouseMove}
+                onMouseLeave={handleTileMouseLeave}
+                style={{
+                  transitionDelay: `${(index % 6) * 20}ms`,
+                  transformStyle: 'preserve-3d',
+                  background: `linear-gradient(135deg, ${p.colorFrom}0b 0%, ${p.colorTo}07 100%)`,
+                }}
+                className="reveal-on-scroll group relative aspect-[1.3/1] w-full rounded-xl overflow-hidden border border-zinc-800/45 hover:border-accent-cyan/40 bg-zinc-950/20 hover:bg-zinc-950/80 transition-all duration-300 flex flex-col items-center justify-center p-3 sm:p-4 cursor-pointer shadow-lg select-none"
+                title={`Click to view ${p.client}`}
+              >
+                {/* Centerpiece Vector Brand Logo */}
+                <div className="w-full h-full flex items-center justify-center text-center transform group-hover:scale-105 transition-transform duration-300 ease-out font-sans">
+                  {p.logo ? (
+                    <img
+                      src={p.logo}
+                      alt={p.client}
+                      className="h-10 sm:h-12 w-auto max-w-[90%] object-contain transition-transform duration-300 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="text-zinc-400 font-extrabold text-xs sm:text-sm tracking-tight text-center px-1.5 uppercase font-mono break-words leading-tight">
+                      {p.client}
+                    </div>
+                  )}
+                </div>
 
-      {/* High-density Client Logo Board Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {filteredProjects.map((p, index) => {
-          return (
-            <div
-              key={p.id}
-              onClick={() => setSelectedClient(p)}
-              onMouseMove={handleTileMouseMove}
-              onMouseLeave={handleTileMouseLeave}
-              style={{
-                transitionDelay: `${(index % 6) * 20}ms`,
-                transformStyle: 'preserve-3d',
-                background: `linear-gradient(135deg, ${p.colorFrom}0b 0%, ${p.colorTo}07 100%)`,
-              }}
-              className="reveal-on-scroll group relative aspect-square w-full rounded-xl overflow-hidden border border-zinc-800/45 hover:border-accent-cyan/40 bg-zinc-950/20 hover:bg-zinc-950/80 transition-all duration-300 flex flex-col items-center justify-center p-5 cursor-pointer shadow-lg select-none"
-              title={`Click to view ${p.client}`}
-            >
-              {/* Centerpiece Vector Brand Logo */}
-              <div className="w-full h-full flex items-center justify-center text-center transform group-hover:scale-105 transition-transform duration-300 ease-out">
-                {p.logo ? (
-                  <img
-                    src={p.logo}
-                    alt={p.client}
-                    className="h-14 w-auto max-w-[90%] object-contain transition-transform duration-300 hover:scale-105"
-                  />
-                ) : (
-                  <div className="text-zinc-400 font-extrabold text-sm tracking-tight text-center px-2 uppercase font-mono break-words leading-tight">
-                    {p.client}
-                  </div>
-                )}
+                {/* Hover highlight decorative borders */}
+                <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-tl" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-br" />
               </div>
-
-              {/* Hover highlight decorative borders */}
-              <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-tl" />
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-transparent group-hover:border-accent-cyan transition-all duration-300 rounded-br" />
-
-              {/* PNG Indicator Badge inline (subtle top-right) */}
-              <span className="absolute top-2 right-2 text-[7px] font-mono text-zinc-600 group-hover:text-amber-400/80 tracking-widest transition-colors">
-                {p.year}
-              </span>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
       {/* Immersive Client Details Overlay Modal */}

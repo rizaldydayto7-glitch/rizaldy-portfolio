@@ -22,7 +22,7 @@ export default function App() {
   useScrollReveal();
 
   return (
-    <div className="relative min-h-screen text-[#f0f0f0] font-sans selection:bg-accent-custom selection:text-white antialiased overflow-hidden">
+    <div className="relative min-h-screen text-[#f0f0f0] font-sans selection:bg-accent-custom selection:text-white antialiased overflow-x-hidden">
       {/* Background Micro Noise Texture overlay */}
       <div className="noise-bg" />
 
