@@ -34,15 +34,15 @@ export default function IndustriesSection() {
       {/* Background Ambience Ambient Lights */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-custom/5 blur-[160px] rounded-full pointer-events-none" />
 
-      {/* Title block - Centered */}
-      <div className="reveal-on-scroll text-center max-w-[800px] mx-auto mb-16 px-4">
+      {/* Title block - Left-aligned following the universal margin */}
+      <div className="max-w-[1200px] mx-auto w-full mb-16 reveal-on-scroll">
         <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#666666] mb-3 block">
           04 / Sectors
         </span>
         <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-6">
           Industries Served
         </h2>
-        <p className="text-[#888888] text-base leading-relaxed max-w-xl mx-auto">
+        <p className="text-[#888888] text-base leading-relaxed max-w-3xl">
           A truly diverse background. Having solved complex workflow, commercial, and strategy problems across more than 20 local and global market sectors.
         </p>
       </div>

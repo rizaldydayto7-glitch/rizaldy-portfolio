@@ -143,12 +143,12 @@ export default function PortfolioSection() {
   };
 
   return (
-    <section id="clients" className="py-24 sm:py-32 px-6 sm:px-12 md:px-16 lg:px-20 w-full max-w-none mx-auto border-t border-[#222222]/30 relative">
+    <section id="clients" className="py-24 sm:py-32 px-6 w-full border-t border-[#222222]/30 relative">
       {/* Upper Subtle Background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-custom/5 blur-[120px] rounded-full pointer-events-none" />
 
-      {/* Contained Centered Content Area with Left Alignment */}
-      <div className="max-w-[1400px] w-full mx-auto relative z-10 flex flex-col items-start text-left">
+      {/* Contained Centered Heading Area following the universal margin */}
+      <div className="max-w-[1200px] w-full mx-auto relative z-10 flex flex-col items-start text-left mb-16">
         {/* Section Title */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6 reveal-on-scroll w-full text-left">
           <div className="text-left">
@@ -171,7 +171,7 @@ export default function PortfolioSection() {
         </div>
 
         {/* Categories Filter Rail */}
-        <div className="flex flex-nowrap overflow-x-auto gap-2.5 mb-12 pb-3 scrollbar-none max-w-full -mx-4 px-4 sm:mx-0 sm:px-0 select-none w-full justify-start">
+        <div className="flex flex-nowrap overflow-x-auto gap-2.5 pb-3 scrollbar-none max-w-full select-none w-full justify-start">
           {categories.map((cat) => {
             const isActive = activeCategory === cat;
             return (
@@ -189,8 +189,10 @@ export default function PortfolioSection() {
             );
           })}
         </div>
+      </div>
 
-        {/* High-density Client Logo Board Grid */}
+      {/* High-density Client Logo Board Grid - Maximize Wide Margins for Grid */}
+      <div className="max-w-[1400px] w-full mx-auto relative z-10">
         <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8 gap-3 sm:gap-4 w-full">
           {filteredProjects.map((p, index) => {
             return (
